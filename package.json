@@ -1,14 +1,18 @@
 {
-  "name": "nms_graphipes",
+  "name": "nms_graphting",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://alindstrom.github.io/NMS_Graphting",
   "scripts": {
     "dev": "npx vite",
     "build": "npx vite build",
-    "preview": "npx vite preview"
+    "preview": "npx vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "vite": "^6.3.5"
   },
   "dependencies": {
