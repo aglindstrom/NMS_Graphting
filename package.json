@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://alindstrom.github.io/NMS_Graphting",
+  "homepage": "https://aglindstrom.github.io/NMS_Graphting",
   "scripts": {
     "dev": "npx vite",
     "build": "npx vite build",
