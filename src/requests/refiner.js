@@ -1,25 +1,47 @@
-import axios from 'axios'
+import axios from "axios"
 
-export async function refinerByInput(appId){
-    const event = new CustomEvent('updateItems',{})
-    try{
-        const resp = await axios(`https://api.nmsassistant.com/ItemInfo/RefinerByInput/${appId}/en`)
-        console.log(resp.data)
-    }catch(error){
-        console.error("getItemsList: ", error)
-    }finally{
-        return [];
-    }
+export async function refinerByInput(node) {
+  try {
+    console.log("Refining[I]")
+    const resp = await axios(
+      `https://api.nmsassistant.com/ItemInfo/RefinerByInput/${node.appId}/en`
+    )
+    const data = resp.data
+
+    const event = new CustomEvent("updateItems", {
+      detail: {
+        node: [data],
+      },
+    })
+
+    document.dispatchEvent(event)
+  } catch (error) {
+    console.error("getItemsList: ", error)
+  } finally {
+    return []
+  }
 }
 
-export async function RefinerByOutput(appId){
-    const event = new CustomEvent('updateItems',{})
-    try{
-        const resp = await axios(`https://api.nmsassistant.com/ItemInfo/RefinerByOutput/${appId}/en`)
-        console.log(resp.data)
-    }catch(error){
-        console.error("getItemsList: ", error)
-    }finally{
-        return [];
-    }
+export async function RefinerByOutput(node) {
+  const event = new CustomEvent("updateItems", {})
+  try {
+    console.log("Refining[O]")
+
+    const recipes = await axios(
+      `https://api.nmsassistant.com/ItemInfo/RefinerByOutut/${node.appId}/en`
+    )
+
+    const event = new CustomEvent("updateGraph", {
+      detail: {
+        node: [node, ...recipes.data],
+        isRefine: true,
+      },
+    })
+
+    document.dispatchEvent(event)
+  } catch (error) {
+    console.error("getItemsList: ", error)
+  } finally {
+    return []
+  }
 }

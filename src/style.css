@@ -11,7 +11,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #e0e0e0;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -21,18 +21,25 @@
   --primary: #9b4438;
   --secondary: #741c2b;
 
-  --graph-bg-1: #303030;
-  --graph-bg-2: #404040;
-  --graph-bg-3: #505050;
-  --graph-bg-4: #606060;
-  --graph-bg-5: #707070;
+  --graph-bg-1: #e0e0e0;
+  --graph-bg-2: #d0d0d0;
+  --graph-bg-3: #c0c0c0;
+  --graph-bg-4: #b0b0b0;
+  --graph-bg-5: #a0a0a0;
   --graph-bg-6: #808080;
 
-  --font-1: #e0e0e0;
-  --font-2: #d0d0d0;
-  --font-3: #c0c0c0;
-  --font-4: #b0b0b0;
-  --font-5: #a0a0a0;
+  --font-1: #303030;
+  --font-2: #404040;
+  --font-3: #505050;
+  --font-4: #606060;
+  --font-5: #707070;
+
+  --s: 40px; /* control the size of the grid */
+  --n: 1; /* control the granularity */
+  --t: 1px; /* the thickness */
+  --g: 33px; /* the gap between dashes */
+
+  --c: #c0c0c0 25%, #0000 0;
 }
 
 * {
@@ -46,16 +53,18 @@ body {
 }
 
 h1 {
+  z-index: 20;
   font-size: 3.2em;
   line-height: 1.1;
+  color: var(--font-1);
 }
 
 #header {
-  background: linear-gradient(0.25turn, var(--primary) 50%, var(--secondary));
+  /* background: linear-gradient(0.25turn, var(--primary) 50%, var(--secondary)); */
   width: 40em;
   margin-top: 2.5em;
   margin-left: 2.5em;
-  padding: 0.75em 1em 0.5em;
+  padding: 0.75em 1em 2em;
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
 }
@@ -70,18 +79,26 @@ h1 {
 
 #item-list {
   flex-basis: 1;
+  z-index: 2;
   width: 25%;
   height: 100%;
-  background-color: var(--graph-bg-2);
+  background-color: var(--graph-bg-1);
+  box-shadow: 0px 0px 50px var(--graph-bg-1);
   overflow-y: scroll;
   overflow-x: hidden;
   border-top-left-radius: 0.5em;
   border-bottom-left-radius: 0.5em;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+#item-list::--webkit-scrollbar {
+  display: none;
 }
 
 #graph {
   flex-basis: 3;
-  width: 75%;
+  width: 100%;
   height: 100%;
   background-color: var(--graph-bg-1);
   border-top-right-radius: 0.5em;
@@ -121,7 +138,21 @@ h1 {
 }
 
 .item:hover {
-  background: linear-gradient(0.25turn, var(--primary) 50%, var(--secondary));
+  /* background: linear-gradient(0.25turn, var(--primary) 50%, var(--secondary)); */
+  background-color: white;
+  color: var(--font-2);
+  box-shadow: 0px 0px 20px 1px var(--graph-bg-2);
+}
+
+.grid-lines {
+  background: conic-gradient(at var(--g) var(--t), var(--c))
+      calc((var(--s) / var(--n) - var(--g) + var(--t)) / 2) 0 /
+      calc(var(--s) / var(--n)) var(--s),
+    conic-gradient(from 180deg at var(--t) var(--g), var(--c)) 0
+      calc((var(--s) / var(--n) - var(--g) + var(--t)) / 2) / var(--s)
+      calc(var(--s) / var(--n));
+  width: calc(round(down, 100%, var(--s)) + var(--t));
+  height: calc(4 * var(--s) + var(--t));
 }
 
 @media (prefers-color-scheme: light) {

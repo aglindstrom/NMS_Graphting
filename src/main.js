@@ -1,7 +1,9 @@
 import "./style.css"
-import Graph from "./graph"
+import GraphVis from "./graphVis"
 import ItemList from "./itemList"
 import Menu from "./menu"
+import { RefinerByOutput } from "./requests/refiner"
+import { CraftingByOutput } from "./requests/crafting"
 
 document.querySelector("#app").innerHTML = `
   <div id='header'>
@@ -14,30 +16,28 @@ document.querySelector("#app").innerHTML = `
   <div id='app-container'> 
     <div id='item-list'>
     </div>
-    <div id='graph'>
+    <div id='graph' class='grid-lines'>
     </div>
   </div>
 `
+
+const refiners = ["conTech13", "conTech14", "conTech15"]
 const itemList = new ItemList()
 
 const recipeMenu = new Menu("recipe-menu")
 recipeMenu.registerItems([
   {
     name: "craft",
-    click: () => {
-      console.log("crafting")
-    },
+    click: CraftingByOutput,
   },
   {
     name: "refine",
-    click: () => {
-      console.log("refining")
-    },
+    click: RefinerByOutput,
   },
 ])
 recipeMenu.build()
 
-const graph = new Graph()
+const graph = new GraphVis()
 graph.attachMenu(recipeMenu)
 graph.update()
 graph.render()

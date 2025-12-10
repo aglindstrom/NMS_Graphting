@@ -3,6 +3,7 @@ export default function Menu(menuName) {
     context: document.querySelector(`#${menuName}`),
     isOpen: false,
     items: [],
+    target: "",
   }
 
   function open(x = 0, y = 0) {
@@ -35,7 +36,9 @@ export default function Menu(menuName) {
     for (const item of menu.items) {
       const element = document.createElement("div")
       element.textContent = item.name
-      element.addEventListener("click", item.click)
+      element.addEventListener("click", () => {
+        item.click(menu.target)
+      })
       element.classList.add("menu-item")
       element.id = item.id
       menu.context.append(element)
